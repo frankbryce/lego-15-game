@@ -26,10 +26,12 @@ def index():
     return render_template('index.html')
 
 @socketio.on('random')
-def onrandom(width, height):
+def onrandom(length):
     print('send random')
+    ar = np.arange(length)
+    np.random.shuffle(ar)
     emit('json', {
-        'random_array': jsEnc(np.random.randint(2, size=(width,height))),
+        'random_array': jsEnc(ar),
     })
 
 @socketio.on('connect')
